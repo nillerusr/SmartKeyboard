@@ -35,7 +35,7 @@ import com.dexilog.smartkeyboard.lang.Korean;
 
 public class UserDictionaryProvider extends ContentProvider {
 
-	private static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".userdicprovider";
+	private static final String AUTHORITY = BuildConfig2.APPLICATION_ID + ".userdicprovider";
 	public static final Uri CONTENT_URI_WORDS = 
 		Uri.parse("content://" + AUTHORITY + "/words");
 	// For Korean

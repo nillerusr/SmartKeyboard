@@ -87,12 +87,12 @@ public final class InputMethodSubtypeCompatUtils {
 
     public static Locale getLocaleObject(final InputMethodSubtype subtype) {
         // Locale.forLanguageTag() is available only in Android L and later.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        /*if (Build.VERSION.SDK_INT >= 21) {
             final String languageTag = (String) CompatUtils.invoke(subtype, null, GET_LANGUAGE_TAG);
             if (!TextUtils.isEmpty(languageTag)) {
                 return Locale.forLanguageTag(languageTag);
             }
-        }
+        }*/
         return LocaleUtils.constructLocaleFromString(subtype.getLocale());
     }
 

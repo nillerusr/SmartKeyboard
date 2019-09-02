@@ -44,8 +44,8 @@ import android.os.Message;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.method.MetaKeyKeyListener;
 import android.util.Log;
@@ -317,7 +317,7 @@ public class SmartKeyboard extends InputMethodService implements
 	private KeyboardFactory keyboardFactory;
 
 	public static boolean isProVersion() {
-		return BuildConfig.PRO;
+		return BuildConfig2.PRO;
 	}
 
 	@Override
@@ -501,7 +501,7 @@ public class SmartKeyboard extends InputMethodService implements
 		initSuggestPuncList();
 	}
 
-	@NonNull
+	@Nonnull
 	private List<String> getEnabledLanguages(String curLanguage) {
 		List<String> langList = LangKeyPref.buildLangList(mSharedPref,
 				getResources());
@@ -653,7 +653,7 @@ public class SmartKeyboard extends InputMethodService implements
 		super.onConfigurationChanged(conf);
 	}
 
-	@NonNull
+	@Nonnull
 	private KeyboardSwitcher createKeyboardSwitcher() {
 		boolean isPortraitMode = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
 		// Compute list of latin layouts
@@ -2250,7 +2250,7 @@ public class SmartKeyboard extends InputMethodService implements
 			// Extract the selected or touching text
 			EditingUtil.SelectedWord touching = EditingUtil
 					.getWordAtCursorOrSelection(ic, mInputController.getLastSelectionStart(),
-							mInputController.getLastSelectionEnd(), mInputController.Companion.getWordSeparators());
+							mInputController.getLastSelectionEnd(), mInputController.getWordSeparators());
 
 			if (touching != null && touching.word.length() > 1) {
 				ic.beginBatchEdit();

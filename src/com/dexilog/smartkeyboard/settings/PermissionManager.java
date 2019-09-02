@@ -21,7 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
+//import android.support.v4.content.ContextCompat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,14 +75,14 @@ public class PermissionManager {
 
     // Return true if permission is granted, otherwise ask for it
     private void checkPermission(String permission, final PermissionsResultCallback callback) {
-        if (Build.VERSION.SDK_INT >= 23 &&
-            ContextCompat.checkSelfPermission(context, permission)
+       /* if (Build.VERSION.SDK_INT >= 23 &&
+            Context.checkSelfPermission(context, permission)
                     != PackageManager.PERMISSION_GRANTED) {
             askPermission(permission, callback);
         } else {
             callback.onRequestPermissionsResult(true);
         }
-
+*/
     }
 
     private void askPermission(String permission, final PermissionsResultCallback callback) {

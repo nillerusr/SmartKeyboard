@@ -29,7 +29,7 @@ import android.net.Uri;
 public class AutoTextProvider extends ContentProvider {
 
 	public static final Uri CONTENT_URI = 
-		Uri.parse("content://" + BuildConfig.APPLICATION_ID + ".autotextprovider");
+		Uri.parse("content://" + BuildConfig2.APPLICATION_ID + ".autotextprovider");
 	public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.cdeguet.autotext";
 	public static final String DATABASE_NAME = "autotext.db";
 	public static final String TABLE_NAME = "autotext";

@@ -16,7 +16,7 @@
 
 package com.dexilog.smartkeyboard;
 
-import android.support.annotation.NonNull;
+import javax.annotation.Nonnull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.CompletionInfo;
@@ -290,7 +290,7 @@ public class SuggestController {
         smartKeyboard.saveWordInHistory(suggestion);
     }
 
-    @NonNull
+    @Nonnull
     private String getLowerCaseWord(CharSequence suggestion) {
         String lowerCase;
         if (smartKeyboard.getConverter() instanceof Korean) {
@@ -314,7 +314,7 @@ public class SuggestController {
         return suggestion;
     }
 
-    @NonNull
+    @Nonnull
     private CharSequence capitalizeWord(CharSequence suggestion) {
         suggestion = suggestion.toString().toUpperCase().charAt(0)
                 + suggestion.subSequence(1, suggestion.length()).toString();

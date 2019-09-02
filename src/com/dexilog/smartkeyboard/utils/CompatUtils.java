@@ -22,10 +22,10 @@ import android.widget.PopupWindow;
 
 public class CompatUtils {
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    @TargetApi(21)
     public static void setPopupUnattachedToDecor(PopupWindow popupWindow) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            popupWindow.setAttachedInDecor(false);
+        if (Build.VERSION.SDK_INT >= 21) {
+            //popupWindow.setAttachedInDecor(false);
         }
     }
 }

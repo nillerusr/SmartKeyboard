@@ -48,10 +48,10 @@ class Backup {
     byte[] mBuffer = new byte[BUFFER_SIZE];
 
     private final String[] mFiles = {
-            "/data/data/" + BuildConfig.APPLICATION_ID + "/databases/autotext.db",
-            "/data/data/" + BuildConfig.APPLICATION_ID + "/databases/userdic.db",
+            "/data/data/" + BuildConfig2.APPLICATION_ID + "/databases/autotext.db",
+            "/data/data/" + BuildConfig2.APPLICATION_ID + "/databases/userdic.db",
             // Hack for Samsung Galaxy S
-            "/dbdata/databases/" + BuildConfig.APPLICATION_ID + "/shared_prefs/" + BuildConfig.APPLICATION_ID + "_preferences.xml"
+            "/dbdata/databases/" + BuildConfig2.APPLICATION_ID + "/shared_prefs/" + BuildConfig2.APPLICATION_ID + "_preferences.xml"
     };
 
     private File mBackupDir;
@@ -143,7 +143,7 @@ class Backup {
 
                 String strEntry = entry.getName();
                 // If was saved from trial version, change the target directory
-                if (BuildConfig.PRO) {
+                if (BuildConfig2.PRO) {
                     strEntry = strEntry.replace("smartkeyboardtrial", "smartkeyboardpro");
                 } else {
                     strEntry = strEntry.replace("smartkeyboardpro", "smartkeyboardtrial");

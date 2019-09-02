@@ -21,7 +21,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.v4.view.ViewCompat;
+//import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,13 +95,13 @@ public final class SetupStartIndicatorView extends LinearLayout {
         @Override
         protected void onDraw(final Canvas canvas) {
             super.onDraw(canvas);
-            final int layoutDirection = ViewCompat.getLayoutDirection(this);
+            final int layoutDirection = getLayoutDirection();
             final int width = getWidth();
             final int height = getHeight();
             final float halfHeight = height / 2.0f;
             final Path path = mIndicatorPath;
             path.rewind();
-            if (layoutDirection == ViewCompat.LAYOUT_DIRECTION_RTL) {
+            if (layoutDirection == View.LAYOUT_DIRECTION_RTL) {
                 // Left arrow
                 path.moveTo(width, 0.0f);
                 path.lineTo(0.0f, halfHeight);

@@ -17,6 +17,7 @@
  */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+	<string name="application_id">su.fwgs.smartkeyboard</string>
 	<string name="help">Help</string>
 	<string name="about">About...</string>
 	<string name="auto_cap">Auto-capitalization</string>

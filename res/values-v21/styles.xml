@@ -17,6 +17,6 @@
  */
 -->
 <resources>
-    <style name="AppTheme" parent="@android:style/Theme.Material.Light">
+    <style name="AppTheme" parent="@android:style/Theme.Light">
     </style>
 </resources>

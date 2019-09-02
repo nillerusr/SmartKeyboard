@@ -103,7 +103,7 @@ public class EmojiCategories {
 
     @TargetApi(23)
     private static boolean canShowFlagEmoji() {
-        Paint paint = new Paint();
+        /*Paint paint = new Paint();
         String switzerland = "\uD83C\uDDE8\uD83C\uDDED"; //  U+1F1E8 U+1F1ED Flag for Switzerland
         try {
             return paint.hasGlyph(switzerland);
@@ -115,11 +115,13 @@ public class EmojiCategories {
             return flagWidth < standardWidth * 1.25;
             // This assumes that a valid glyph for the flag emoji must be less than 1.25 times
             // the width of the penguin.
-        }
+        }*/
+		return true;
     }
 
     @TargetApi(23)
     private static boolean canShowUnicodeEightEmoji() {
+		/*
         Paint paint = new Paint();
         String cheese = "\uD83E\uDDC0"; //  U+1F9C0 Cheese wedge
         try {
@@ -131,6 +133,8 @@ public class EmojiCategories {
             // This assumes that a valid glyph for the cheese wedge must be greater than the width
             // of the noncharacter.
         }
+		*/
+		return true;
     }
 
     public String getEmoji(int index) {

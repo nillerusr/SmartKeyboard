@@ -19,7 +19,7 @@ package com.dexilog.smartkeyboard.settings;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
+//import android.support.v4.app.ActivityCompat;
 
 public class PermissionActivity extends Activity {
     public static final String PERMISSIONS = "PERMISSIONS";
@@ -51,7 +51,7 @@ public class PermissionActivity extends Activity {
             final String[] permissionsToRequest = extras.getStringArray(PERMISSIONS);
             mPendingRequestCode = extras.getInt(PERMISSION_REQUEST_CODE);
             // Assuming that all supplied permissions are not granted yet, so that we don't need to
-            ActivityCompat.requestPermissions(this, permissionsToRequest, mPendingRequestCode);
+           // ActivityCompat.requestPermissions(this, permissionsToRequest, mPendingRequestCode);
         }
     }
 

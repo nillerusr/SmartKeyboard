@@ -46,7 +46,7 @@ public class RichInputMethodSubtype {
     private static final HashMap<Locale, Locale> sLocaleMap = initializeLocaleMap();
     private static final HashMap<Locale, Locale> initializeLocaleMap() {
         final HashMap<Locale, Locale> map = new HashMap<>();
-        if (BuildCompatUtils.EFFECTIVE_SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (BuildCompatUtils.EFFECTIVE_SDK_INT >= 21) {
             // Locale#forLanguageTag is available on API Level 21+.
             // TODO: Remove this workaround once when we become able to deal with "sr-Latn".
             //map.put(Locale.forLanguageTag("sr-Latn"), new Locale("sr_ZZ"));

@@ -26,7 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 
-import com.dexilog.smartkeyboard.BuildConfig;
+import com.dexilog.smartkeyboard.BuildConfig2;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class ActivityHelper extends Activity {
         mServiceBridge = new ServiceBridge();
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra("calling_package"/*RecognizerIntent.EXTRA_CALLING_PACKAGE*/, BuildConfig.APPLICATION_ID);
+        intent.putExtra("calling_package"/*RecognizerIntent.EXTRA_CALLING_PACKAGE*/, BuildConfig2.APPLICATION_ID);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
 

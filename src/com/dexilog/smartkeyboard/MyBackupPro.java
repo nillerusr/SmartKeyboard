@@ -72,7 +72,7 @@ public class MyBackupPro extends ContentProvider {
 	//CHANGE_THIS: This is the URI name for MyBackup,  this has to be YourPackageName.MyBackupPro 
 	//Make sure the CONTENT_AUTHORITY ends with MyBackupPro
 	//Make sure you put the <provider> tag in the AndroidManifest.xml file as described above
-	private  final String CONTENT_AUTHORITY =  BuildConfig.APPLICATION_ID + "MyBackupPro";
+	private  final String CONTENT_AUTHORITY =  BuildConfig2.APPLICATION_ID + "MyBackupPro";
 	
 	
 	//CHANGE_THIS: This is a list of files and their paths that you want to backup up
