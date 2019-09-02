@@ -206,7 +206,7 @@ public class SkinList extends Activity implements OnKeyboardActionListener, OnIt
 	}
 
 	private void getOpenSkins(final LoadOpenSkinsCallback callback) {
-		PermissionManager.get(this).checkReadStoragePermission(new PermissionManager.PermissionsResultCallback() {
+		/**PermissionManager.get(this).checkReadStoragePermission(new PermissionManager.PermissionsResultCallback() {
 			@Override
 			public void onRequestPermissionsResult(boolean allGranted) {
 				if (allGranted)
@@ -214,7 +214,8 @@ public class SkinList extends Activity implements OnKeyboardActionListener, OnIt
 				else
 					callback.onLoad(EMPTY_SKIN_LIST);
 			}
-		});
+		});*/
+		findOpenSkins(callback);
 	}
 
 	@Override
