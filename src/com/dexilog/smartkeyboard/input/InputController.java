@@ -3,9 +3,10 @@ import android.view.inputmethod.*;
 
 public class InputController
 {
+	WordComposer composer;
 	public InputController(InputConnectionProvider provider, boolean apostropheSeparator)
 	{
-		
+		composer = new WordComposerImpl();
 	}
 	
 	public boolean getPredicting(){
@@ -17,7 +18,7 @@ public class InputController
 	}
 	public WordComposer getCurrentWordComposer()
 	{
-		return null;
+		return composer;
 	}
 	public void reswapPeriodAndSpace()
 	{
