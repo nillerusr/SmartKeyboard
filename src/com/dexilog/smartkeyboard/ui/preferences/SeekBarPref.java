@@ -19,11 +19,19 @@ public class SeekBarPref extends DialogPreference implements SeekBar.OnSeekBarCh
     private LinearLayout layout = null;
     private AudioManager mAudioManager = null;
     private Vibrator mVibrator = null;
-    private int displayFactor = 1;
+    private float mDisplayFactor = 1, mMin = 0, mMax=100, mDefault = 100;
     
     public SeekBarPref(Context context, AttributeSet attrs) { 
         super(context, attrs); 
         this.context = context;
+		try
+		{
+			mMin = attrs.getAttributeFloatValue(null, "minValue", 0);
+			mMax = attrs.getAttributeFloatValue(null, "maxValue", 100);
+			mDisplayFactor = attrs.getAttributeFloatValue(null, "displayFactor",1.0f);
+			mDefault = attrs.getAttributeFloatValue(android.R.attr.defaultValue,100);
+		}
+		catch(Exception e){}
     } 
     
     protected void onPrepareDialogBuilder(Builder builder) {
@@ -53,7 +61,7 @@ public class SeekBarPref extends DialogPreference implements SeekBar.OnSeekBarCh
         }
         else if (key.equals("opacity")) {
         	bar.setMax(50);
-            displayFactor = 2;
+            mDisplayFactor = 2;
         	bar.setProgress(getPersistedInt(50));
         } else if (key.equals("longpress_duration")) {
         	bar.setMax(100);
@@ -68,8 +76,8 @@ public class SeekBarPref extends DialogPreference implements SeekBar.OnSeekBarCh
         	bar.setMax(40);
     		bar.setProgress(getPersistedInt(0));
         } else {
-        	bar.setMax(100);
-        	bar.setProgress(getPersistedInt(100));
+        	bar.setMax((int)((mMax - mMin)/mDisplayFactor));
+        	bar.setProgress((int)((getPersistedFloat(mDefault) - mMin )/ mDisplayFactor));
         }
         bar.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)); 
         layout.addView(bar);
@@ -81,13 +89,13 @@ public class SeekBarPref extends DialogPreference implements SeekBar.OnSeekBarCh
     
     protected void onDialogClosed(boolean positiveResult) { 
         if(positiveResult){ 
-            persistInt(bar.getProgress()); 
+            persistFloat(mMin + bar.getProgress()*mDisplayFactor); 
         } 
         super.onDialogClosed(positiveResult);
     }
 
     private void setText() {
-        text.setText("" + bar.getProgress() * displayFactor);
+        text.setText(String.format("%f",(mMin + bar.getProgress() * mDisplayFactor)));
     }
 
 	@Override

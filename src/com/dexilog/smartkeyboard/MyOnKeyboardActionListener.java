@@ -157,6 +157,12 @@ class MyOnKeyboardActionListener implements OnKeyboardActionListener {
 			case Keyboard.KEYCODE_EMOJI_TAB8:
 				keyboardSwitcher.changeEmojiCategory(7);
 				break;
+			case Keyboard.KEYCODE_FLOATING:
+				smartKeyboard.toggleFloating(false);
+				break;
+			case -141:
+				smartKeyboard.toggleFloating(true);
+				break;
 			default:
 				if (smartKeyboard.mInputController.isWordSeparator(primaryCode)) {
 					smartKeyboard.handleSeparator(primaryCode, replace, hardKbd);

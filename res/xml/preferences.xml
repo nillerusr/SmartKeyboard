@@ -501,10 +501,6 @@
 				android:targetPackage="@string/application_id"
 				android:targetClass="com.dexilog.smartkeyboard.Calibration" />
 		</PreferenceScreen>
-		<com.dexilog.smartkeyboard.KeyHeightDialog
-			android:title="@string/key_height" android:summary="@string/key_height_summary"
-			android:dialogTitle="@string/key_height" android:key="key_height"
-			android:persistent="true" android:defaultValue="50" />
 		<CheckBoxPreference android:title="@string/hide_period"
 			android:key="hide_period" android:summary="@string/hide_period_summary"
 			android:persistent="true" android:defaultValue="false" />
@@ -515,6 +511,36 @@
 			android:title="@string/bottom_padding" android:summary="@string/bottom_padding_summary"
 			android:dialogTitle="@string/bottom_padding" android:key="bottom_padding"
 			android:persistent="true" android:defaultValue="0" />
+	</PreferenceScreen>
+	<PreferenceScreen android:title="Size settings">
+
+		<com.dexilog.smartkeyboard.KeyHeightDialog
+			android:title="@string/key_height" android:summary="@string/key_height_summary"
+			android:dialogTitle="@string/key_height" android:key="key_height"
+			android:persistent="true" android:defaultValue="50" />
+
+		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
+			android:title="@string/bottom_padding" android:summary="@string/bottom_padding_summary"
+			android:dialogTitle="@string/bottom_padding" android:key="bottom_padding"
+			android:persistent="true" android:defaultValue="0" />
+
+		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
+			android:title="Font scale" android:summary="Scale key fonts"
+			android:dialogTitle="Font size" android:key="fontScale"
+			android:persistent="true" android:defaultValue="1.0"
+			minValue="0.1" maxValue="4.1" displayFactor="0.05"/>
+
+		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
+			android:title="Icon scale" android:summary="Scale key icons"
+			android:dialogTitle="Icon scale" android:key="iconScale"
+			android:persistent="true" android:defaultValue="1.0"
+			minValue="0.1" maxValue="4.1" displayFactor="0.05"/>
+
+		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
+			android:title="Keyboard width" android:summary="width"
+			android:dialogTitle="Keyboard width" android:key="keyboardWidth"
+			android:persistent="true" android:defaultValue="1.0"
+			minValue="0.0" maxValue="1.0" displayFactor="0.001"/>
 	</PreferenceScreen>
 
 	<PreferenceScreen android:title="@string/text_prediction">

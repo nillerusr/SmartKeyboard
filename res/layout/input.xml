@@ -21,14 +21,15 @@
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:layout_gravity="bottom"
-	android:orientation="vertical" >
-
+	android:orientation="vertical"
+	android:id="@+id/main_keyboard_container">
 
 	<com.dexilog.smartkeyboard.ui.CandidateViewContainer
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/candidates_container"
 		android:orientation="horizontal" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" >
+		android:layout_height="wrap_content"
+		android:layout_gravity="right">
 
 		<LinearLayout android:id="@+id/candidate_left_parent"
 			android:layout_width="wrap_content" android:layout_height="fill_parent"
@@ -64,11 +65,13 @@
 		</LinearLayout>
 
 	</com.dexilog.smartkeyboard.ui.CandidateViewContainer>
-
+<!--
 	<com.dexilog.smartkeyboard.ui.MainKeyboardView
 		xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/keyboard"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" />
+		android:layout_width="960px"
+		android:layout_height="wrap_content"
+		android:layout_gravity="right"/>
+	-->
 
 </LinearLayout>
 

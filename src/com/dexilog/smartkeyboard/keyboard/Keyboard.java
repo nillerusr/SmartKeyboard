@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import com.dexilog.smartkeyboard.R;
+import android.preference.*;
+import android.content.*;
 
 
 /**
@@ -118,7 +120,7 @@ public class Keyboard {
 		android.R.attr.state_pressed
 	};
 
-	private static final int KEYCODE_SPACE = ' ';
+	private static final int KEYCODE_SPACE = (int)' ';
 
 	/** Horizontal gap default for all rows */
 	private int mDefaultExactHorizontalGap;
@@ -204,6 +206,7 @@ public class Keyboard {
 	public static final int KEYCODE_EMOJI_TAB6 = -136;
 	public static final int KEYCODE_EMOJI_TAB7 = -137;
 	public static final int KEYCODE_EMOJI_TAB8 = -138;
+	public static final int KEYCODE_FLOATING = -140;
 
 	public static final int KEYCODE_DAKUTEN = 12441;
 
@@ -222,6 +225,7 @@ public class Keyboard {
 	private Key mT9Key;
 	private Key mMicKey;
 	private Key mNextKey;
+	private Key mFloatingKey;
 	private String mLang;
 	
 	private boolean mNumbersTop;
@@ -685,6 +689,7 @@ public class Keyboard {
 		DisplayMetrics dm = context.getResources().getDisplayMetrics();
 		mDisplayWidth = dm.widthPixels;
 		mDisplayHeight = dm.heightPixels;
+		mDisplayWidth *= GlobalResources.mWidthScale;
 		//Log.d(TAG, "keyboard's display metrics:" + dm);
 		mNumbersTop = numbersTop;
 		mEmojiCategories = emojiCategories;
@@ -1042,6 +1047,9 @@ public class Keyboard {
 					mEnterKey = key;
 				}
 				break;
+			case KEYCODE_FLOATING:
+				mFloatingKey = key;
+				break;
 			case KEYCODE_LANG:
 				mLangKey = key;
 				mLangKey.popupResId = R.xml.popup;
@@ -1119,6 +1127,16 @@ public class Keyboard {
 			mShiftKey.setSticky(enabled);
 			mShiftLockEnabled = enabled;
 		}
+	}
+
+	public void setFloatingSticky(boolean sticky, boolean enabled)
+	{
+		//mFloatingKey.on = enabled;
+		//mFloatingKey.sticky = sticky && enabled;
+		if( sticky)
+			mFloatingKey.altLabel = enabled?"+":"-";
+		else
+			mFloatingKey.altLabel = "";
 	}
 
 

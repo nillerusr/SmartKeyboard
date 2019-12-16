@@ -60,6 +60,7 @@ import com.dexilog.smartkeyboard.ui.SkinLoader.SkinInfo;
 import com.dexilog.smartkeyboard.R;
 
 import static com.dexilog.smartkeyboard.keyboard.Keyboard.KEYCODE_EMOJI_NUM;
+import com.dexilog.smartkeyboard.keyboard.*;
 
 
 /**
@@ -331,8 +332,8 @@ public class MainKeyboardView extends View implements View.OnClickListener, Keyb
 		mSpaceCorrection = resources.getDimensionPixelOffset(R.dimen.spacebar_vertical_correction);
 		mPreviewOffset = 0;
 		mPreviewHeight = resources.getDimensionPixelSize(R.dimen.preview_height);
-		mLabelTextSize = (int)resources.getDimension(R.dimen.label_text_size);
-		mAltLabelSize = (int)resources.getDimension(R.dimen.alt_label_size);
+		mLabelTextSize = (int)(resources.getDimension(R.dimen.label_text_size) * GlobalResources.mFontScale);
+		mAltLabelSize = (int)(resources.getDimension(R.dimen.alt_label_size) * GlobalResources.mFontScale);
 		mPopupLayout = R.layout.keyboard_popup_keyboard;
 		mShadowColor = null;
 		mAltShadowColor = null;
@@ -499,10 +500,10 @@ public class MainKeyboardView extends View implements View.OnClickListener, Keyb
 		mPopupSkin = skin.popupSkin;
 		
 		Resources res = getResources();
-		mKeyTextSize[0] = (int)res.getDimension(R.dimen.key_text_size);
-		mKeyTextSize[1] = (int)res.getDimension(R.dimen.key_small_text_size);
-		mKeyTextSize[2] = (int)res.getDimension(R.dimen.key_very_small_text_size);
-		mKeyTextSize[3] = (int)res.getDimension(R.dimen.key_big_text_size);
+		mKeyTextSize[0] = (int)(res.getDimension(R.dimen.key_text_size) * GlobalResources.mFontScale);
+		mKeyTextSize[1] = (int)(res.getDimension(R.dimen.key_small_text_size) * GlobalResources.mFontScale);
+		mKeyTextSize[2] = (int)(res.getDimension(R.dimen.key_very_small_text_size) * GlobalResources.mFontScale);
+		mKeyTextSize[3] = (int)(res.getDimension(R.dimen.key_big_text_size) * GlobalResources.mFontScale);
 		if (mSmallKeys) {
 			for (int i=0; i<2; i++) {
 				mKeyTextSize[i] = mKeyTextSize[i] * 95 / 100;
@@ -981,8 +982,8 @@ public class MainKeyboardView extends View implements View.OnClickListener, Keyb
 	}
 
 	private void drawKeyIcon(Key key, Canvas canvas, Drawable icon) {
-		final int width = icon.getIntrinsicWidth();
-		final int height = icon.getIntrinsicHeight();
+		final int width = (int)(icon.getIntrinsicWidth() * GlobalResources.mIconScale);
+		final int height = (int)(icon.getIntrinsicHeight() * GlobalResources.mIconScale);
 		final int x = (key.width - mPadding.left - mPadding.right - width) / 2 + mPadding.left;
 		final int y = (key.height - mPadding.top - mPadding.bottom - height) / 2 + mPadding.top;
 		drawIcon(canvas, icon, x, y, width, height);
@@ -1163,6 +1164,8 @@ public class MainKeyboardView extends View implements View.OnClickListener, Keyb
 	}
 
 	protected void detectAndSendKey(int index, int x, int y, long eventTime, int pointerCount) {
+		if( mMoving )
+			return;
 		if (DEBUG) Log.d(TAG, "detectAndSendKey " + Integer.toString(index) + " x=" +
 				Integer.toString(x) + " y=" + Integer.toString(y));
 		if (index != NOT_A_KEY && index < mKeys.length) {
@@ -1447,6 +1450,17 @@ public class MainKeyboardView extends View implements View.OnClickListener, Keyb
 			// Long press on LANG key -> show preferences screen
 			return mKeyboardActionListener.onDisplayPrefScreen();
 		}
+		else if (popupKey.codes[0] == -140)
+		{
+
+            int[] codes = new int[1];
+            codes[0] = -141;
+            mKeyboardActionListener.onKey(-141, codes, false, false);
+            mKeyboardActionListener.onRelease(-141);
+			return true;
+		}
+		else if(popupKey.codes[0]==32)
+			mMoving = mMover != null;
 		return false;
 	}
 
@@ -1666,6 +1680,9 @@ MotionEvent.ACTION_DOWN, me.getX(), me.getY() , me.getMetaState());
 
 	@Override
 	public boolean onTouchEvent(MotionEvent me) {
+		if(handleWindowMove(me))
+			return true;
+
 		return onBaseTouchEvent(me, true);
 	}
 
@@ -1821,6 +1838,24 @@ MotionEvent.ACTION_DOWN, me.getX(), me.getY() , me.getMetaState());
 
 		return true;
 	}
+	private int mLastRealX, mLastRealY;
+	boolean handleWindowMove(MotionEvent me)
+	{
+		if( mMover == null )
+			return false;
+		int action = me.getAction();
+		int x = (int)me.getRawX(), y =(int)me.getRawY();
+		int dx = x - mLastRealX, dy = y - mLastRealY;
+
+		if( mMoving && action == MotionEvent.ACTION_MOVE )
+			mMover.move(dx, dy);
+
+		mLastRealX = (int)me.getRawX();
+		mLastRealY = (int)me.getRawY();
+		if( action == MotionEvent.ACTION_DOWN )
+			mMoving = false;
+		return mMoving && action == MotionEvent.ACTION_MOVE;
+	}
 
 	private void handleMotionEvent(MotionEvent me, int action, long eventTime, int pointerCount) {
 		int pointerIndex;
@@ -1879,9 +1914,16 @@ MotionEvent.ACTION_DOWN, me.getX(), me.getY() , me.getMetaState());
                         Message msg = mHandler.obtainMessage(MSG_LONGPRESS, me);
                         mHandler.sendMessageDelayed(msg, mLongpressDuration);
                     }
-                }
-                showPreview(mCurrentKey);
 
+					mLastRealX = (int)me.getRawX();
+					mLastRealY = (int)me.getRawY();
+					mMoving = mKeys[keyIndex].codes[0] == 32;
+                }
+				else
+				{
+
+				}
+                showPreview(mCurrentKey);
                 mLastX = touchX;
                 mLastY = touchY;
             }
@@ -2137,6 +2179,17 @@ MotionEvent.ACTION_DOWN, me.getX(), me.getY() , me.getMetaState());
 
 	public void setPopupKeyboardDisabled(boolean disablePopupKeyboard) {
 		this.popupKeyboardDisabled = disablePopupKeyboard;
+	}
+	public interface WindowMover
+	{
+		public void move(int dx, int dy);
+	}
+	private WindowMover mMover;
+	private boolean mMoving;
+	
+	public void setWindowMover(WindowMover mover)
+	{
+		mMover = mover;
 	}
 
 }

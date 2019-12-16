@@ -95,6 +95,10 @@ import com.dexilog.smartkeyboard.utils.Workarounds;
 import com.dexilog.smartkeyboard.ui.CandidateInputService;
 import com.dexilog.smartkeyboard.ui.CandidateView;
 import com.dexilog.smartkeyboard.ui.CandidateViewContainer;
+import android.widget.*;
+import android.view.*;
+import android.graphics.*;
+import android.util.*;
 
 
 public class SmartKeyboard extends InputMethodService implements
@@ -120,9 +124,9 @@ public class SmartKeyboard extends InputMethodService implements
 	// is reverted)
 	static final int FREQUENCY_FOR_TYPED = 1;
 
-	static final int KEYCODE_ENTER = '\n';
-	static final int KEYCODE_SPACE = ' ';
-	static final int KEYCODE_PERIOD = '.';
+	static final int KEYCODE_ENTER = (int)'\n';
+	static final int KEYCODE_SPACE = (int)' ';
+	static final int KEYCODE_PERIOD = (int)'.';
 
 	// private static final int SOUND_ANDROID = 0;
 	private static final int SOUND_IPHONE = 1;
@@ -249,6 +253,10 @@ public class SmartKeyboard extends InputMethodService implements
 	private Method mGetRotation = null;
 	private int mScreenLayout = 0;
 
+	private WindowManager mWM = null;
+	private boolean mFloating = false;
+	private boolean mFloatingSticky = false;
+
 	// For each word, a list of potential replacements, usually from voice.
 	public Map<String, List<CharSequence>> mWordToSuggestions = new HashMap<String, List<CharSequence>>();
 
@@ -329,7 +337,7 @@ public class SmartKeyboard extends InputMethodService implements
 		// Retrieve preferences
 		SharedPreferences sp = mSharedPref;
 		keyboardPreferences.initialize(sp);
-		mVibrateOn = sp.getBoolean(KeyboardPreferences.PREF_VIBRATE_ON, true);
+		mVibrateOn = sp.getBoolean(KeyboardPreferences.PREF_VIBRATE_ON, false);
 		if (mVibrateOn) {
 			mVibrateDuration = new VibratorSettings(sp).getDurationMs();
 			mSpaceAlert = sp.getBoolean(KeyboardPreferences.PREF_SPACE_ALERT, false);
@@ -340,19 +348,19 @@ public class SmartKeyboard extends InputMethodService implements
 		mSwipeUp = swipeGestures.getSwipeAction(sp.getString("swipe_up", "Shift"));
 		mSwipeDown = swipeGestures.getSwipeAction(sp.getString("swipe_down", "Close"));
 		final String curLanguage = sp.getString("curLang", "EN");
-		final String skin = sp.getString(KeyboardPreferences.PREF_SKIN, "Black");
+		final String skin = sp.getString(KeyboardPreferences.PREF_SKIN, "Android");
 		mSkinLoader.loadSkin(skin);
 		mOpacity = sp.getInt(KeyboardPreferences.PREF_TRANSPARENCY, 50);
 		final int volume = sp.getInt(KeyboardPreferences.PREF_VOLUME, 100);
 		mVolume = (float) Math.exp((volume - 100) / 20);
-		mMicButton = sp.getBoolean(KeyboardPreferences.PREF_MIC_BUTTON, true);
+		mMicButton = sp.getBoolean(KeyboardPreferences.PREF_MIC_BUTTON, false);
 		voiceInputController.mRestartVoice = sp.getBoolean(KeyboardPreferences.PREF_RESTART_VOICE, false);
 		voiceInputController.mVoiceBest = sp.getBoolean(KeyboardPreferences.PREF_VOICE_BEST, false);
 		voiceInputController.mLegacyVoice = sp.getBoolean(KeyboardPreferences.PREF_LEGACY_VOICE, false);
 		mSmileyMode = Integer.parseInt(sp.getString(KeyboardPreferences.PREF_SMILEY_KEY, "0"));
 		mDebug = sp.getBoolean(KeyboardPreferences.PREF_DEBUG, false);
 		mShowTouchPoints = sp.getBoolean(KeyboardPreferences.PREF_TOUCH_POINTS, false);
-		mShowPreview = sp.getBoolean(KeyboardPreferences.PREF_SHOW_PREVIEW, true);
+		mShowPreview = sp.getBoolean(KeyboardPreferences.PREF_SHOW_PREVIEW, false);
 		mPortraitMode = Integer.parseInt(sp.getString(KeyboardPreferences.PREF_PORTRAIT_MODE, "0"));
 		mSpaceWhenPick = sp.getBoolean(KeyboardPreferences.PREF_SPACE_WHEN_PICK, false);
 		mSwapPunctuationSpace = sp.getBoolean(KeyboardPreferences.PREF_SWAP_PUNCTUATION_SPACE,
@@ -439,16 +447,21 @@ public class SmartKeyboard extends InputMethodService implements
 
 		final boolean hidePeriod = sp.getBoolean(KeyboardPreferences.PREF_HIDE_PERIOD, false);
 		final boolean hideComma = sp.getBoolean(KeyboardPreferences.PREF_HIDE_COMMA, false);
+		final float widthScale = sp.getFloat("keyboardWidth",1);
 		// Recreate the keyboards if the key height has changed
 		final boolean clearKbd = (newKeyHeight != GlobalResources.mKeyHeight)
 				|| (newKeyHeightLandscape != GlobalResources.mKeyHeightLandscape)
 				|| (hidePeriod != GlobalResources.mHidePeriod)
 				|| (hideComma != GlobalResources.mHideComma)
-				|| (arrowsMain != mArrowsMain);
+				|| (arrowsMain != mArrowsMain)
+				|| (widthScale != GlobalResources.mWidthScale);
 		GlobalResources.mKeyHeight = newKeyHeight;
 		GlobalResources.mKeyHeightLandscape = newKeyHeightLandscape;
 		GlobalResources.mHidePeriod = hidePeriod;
 		GlobalResources.mHideComma = hideComma;
+		GlobalResources.mWidthScale = widthScale;
+		GlobalResources.mFontScale = sp.getFloat("fontScale",1);
+		GlobalResources.mIconScale = sp.getFloat("iconScale",1);
 		mArrowsMain = arrowsMain;
 
 		mKeyboardSwitcher.makeKeyboards(clearKbd);
@@ -585,6 +598,7 @@ public class SmartKeyboard extends InputMethodService implements
 
 		mSoundPool = new SoundPool(1, AudioManager.STREAM_SYSTEM, 0);
 		mSkinLoader = new SkinLoader(SmartKeyboard.this, mOrientation);
+		mWM = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
 	}
 
 	protected void migrateLegacyPreferences() {
@@ -662,6 +676,105 @@ public class SmartKeyboard extends InputMethodService implements
 		return new KeyboardSwitcher(this, keyboardFactory, keyboardPreferences);
 	}
 
+
+	private MainKeyboardView mLastKeyboard;
+	private int mDisplayWidth, mDisplayHeight;
+	private int mKeyboardWidth;
+	private void setFloating(boolean floating)
+	{
+		if( mLastKeyboard == null )
+			return;
+		detachKeyboardViews();
+
+		if( floating )
+		{
+			mLastKeyboard.setWindowMover(new MainKeyboardView.WindowMover()
+			{
+				@Override
+				public void move(int dx, int dy)
+				{
+					WindowManager.LayoutParams params = (WindowManager.LayoutParams)mLastKeyboard.getLayoutParams();
+					params.x += dx;
+					params.y += dy;
+					if(params.x < 0)
+						params.x = 0;
+					if(params.y < 0)
+						params.y = 0;
+					if(params.x + mKeyboardWidth > mDisplayWidth)
+						params.x = mDisplayWidth - params.width;
+
+					if(params.y + mLastKeyboard.getHeight() > mDisplayHeight)
+						params.y = mDisplayHeight - mLastKeyboard.getHeight();
+					mWM.updateViewLayout(mLastKeyboard,params);
+				}
+			}
+			);
+			WindowManager.LayoutParams params = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.TYPE_SYSTEM_ERROR, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.OPAQUE);
+			params.gravity = Gravity.LEFT | Gravity.TOP;
+			params.x = mFloatingX;
+			params.y = mFloatingY;
+			params.width = mKeyboardWidth;     
+			params.height = mDisplayHeight;
+			mWM.addView(mLastKeyboard, params);
+		}
+		else if(mFloating)
+		{
+			
+			//onInitializeInterface();
+			hideWindow();
+			if( mFloatingSticky )
+				return;
+			//showWindow(true);
+		}
+		else
+		{
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+			params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+			((LinearLayout)mInputView).addView(mLastKeyboard, params);
+			mLastKeyboard.setWindowMover(null);
+		}
+		mFloating = floating;
+	}
+	public void toggleFloating(boolean sticky)
+	{
+		if( sticky )
+			mFloatingSticky = !mFloatingSticky;
+		else
+			setFloating(!mFloating);
+
+		((com.dexilog.smartkeyboard.keyboard.Keyboard) mKeyboardSwitcher.getMainKeyboardView().getKeyboard())
+			.setFloatingSticky(mFloating,mFloatingSticky);
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		mKeyboardView.setShifted(mCapsLock || mKeyboardView.isShifted(),
+								 true);
+				
+								 
+								 
+	}
+	int mFloatingX, mFloatingY;
+	private void detachKeyboardViews()
+	{
+		if( mLastKeyboard == null )
+			return;
+		try
+		{
+			((LinearLayout)mInputView).removeView(mLastKeyboard);
+		}
+		catch(Exception e){}
+		try
+		{
+			WindowManager.LayoutParams params = (WindowManager.LayoutParams)mLastKeyboard.getLayoutParams();
+			mFloatingX = params.x;
+			mFloatingY = params.y;
+		}
+		catch(Exception e){}
+		try
+		{
+			mWM.removeView(mLastKeyboard);
+		}
+		catch(Exception e){}
+	}
+
 	@Override
 	public View onCreateInputView() {
 		if (mDebug)
@@ -669,7 +782,16 @@ public class SmartKeyboard extends InputMethodService implements
 
 		mInputView = getLayoutInflater().inflate(R.layout.input, null);
 
-		MainKeyboardView mainKeyboardView = (MainKeyboardView) mInputView.findViewById(R.id.keyboard);
+		MainKeyboardView mainKeyboardView = new MainKeyboardView(getLayoutInflater().getContext(),null);//(MainKeyboardView) mInputView.findViewById(R.id.keyboard);
+
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		mDisplayWidth = dm.widthPixels;
+		mDisplayHeight = dm.heightPixels;
+		mKeyboardWidth = (int)(mDisplayWidth * GlobalResources.mWidthScale);
+		detachKeyboardViews();
+		mLastKeyboard = mainKeyboardView;
+		setFloating(false);
+		
 		mKeyboardSwitcher.setInputView(mainKeyboardView);
 		mainKeyboardView.setCustomKeys(mCustomKeys);
 		setInputOptions(false);
@@ -875,6 +997,8 @@ public class SmartKeyboard extends InputMethodService implements
 			final boolean isVisible = isKeyboardVisible();
 			mKeyboardView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
 		}
+		detachKeyboardViews();
+		setFloating(mFloating);
 
 		// Always disable composing text in CoPilot
 		if (mDebug)
@@ -1092,6 +1216,8 @@ public class SmartKeyboard extends InputMethodService implements
         // Remove penging messages related to update suggestions
         mHandler.removeMessages(MSG_UPDATE_SUGGESTIONS);
         mHandler.removeMessages(MSG_UPDATE_OLD_SUGGESTIONS);
+		if(!mFloatingSticky)
+			detachKeyboardViews();
     }
 
 	@Override

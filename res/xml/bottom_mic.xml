@@ -34,12 +34,13 @@
 	<Row android:rowEdgeFlags="bottom" android:keyboardMode="@+id/mode_lang">
 		<Key android:codes="-2" android:keyLabel="123" android:keyWidth="12%p"
 			android:keyEdgeFlags="left" />
+		<Key android:codes="-140" android:keyLabel="fl" android:keyWidth="10%p"/>
 		<Key android:codes="-101" android:keyLabel="" android:keyWidth="10%p" />
 		<Key android:codes="-108" android:iconPreview="@drawable/mic_black" android:keyWidth="10%p" 
 			commaWidth="0.0" />
 		<Key android:codes="32" android:keyIcon="@drawable/sym_keyboard_space"
 			android:iconPreview="@drawable/sym_keyboard_feedback_space" iconID="@+id/space_key"
-			android:keyWidth="40%p" android:isRepeatable="false" commaWidth="10.0" periodWidth="10.0" />
+			android:keyWidth="30%p" android:isRepeatable="false" commaWidth="10.0" periodWidth="10.0" />
 		<Key android:codes="46" android:keyLabel="." altLabel="," periodWidth="0.0"
 			android:popupCharacters="," android:keyWidth="10%p" />
 		<Key android:codes="10" android:keyIcon="@drawable/sym_keyboard_return"
