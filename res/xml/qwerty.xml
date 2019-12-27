@@ -20,7 +20,8 @@
 	android:keyWidth="10%p" android:horizontalGap="0px"
 	android:verticalGap="@dimen/vertical_gap" android:keyHeight="@dimen/key_height">
 	<Include xml="@xml/numbers_top"/>
-	<Row>
+	<Row android:keyWidth="9.6%p">>
+		<Key android:keyWidth="3.999996%p" android:codes="96" android:popupCharacters="~" android:keyEdgeFlags="left" android:keyLabel="`" altLabel="~" />
 		<Key android:codes="113" android:keyLabel="q" altLabel="1" android:popupCharacters="1" 
 			android:keyEdgeFlags="left" />
 		<Key android:codes="119" android:keyLabel="w" altLabel="2" android:popupCharacters="2" />
@@ -34,10 +35,9 @@
 		<Key android:codes="112" android:keyLabel="p" altLabel="0" android:popupCharacters="0" 
 			android:keyEdgeFlags="right" />
 	</Row>
-	<Row android:keyWidth="10.2%p">
-		<Key android:codes="97" android:keyLabel="a" altLabel="\@" android:popupCharacters="\@" 
-			android:horizontalGap="@fraction/nine_keys_padding" android:keyEdgeFlags="left" />
-		<Key android:codes="115" android:keyLabel="s" altLabel="\#" android:popupCharacters="\#" />
+	<Row android:keyWidth="9.6%p">
+		<Key android:keyWidth="6.499996%p" android:codes="-106" android:keyEdgeFlags="left" android:keyIcon="@drawable/sym_keyboard_tab" android:isRepeatable="true" />
+		<Key android:horizontalGap="0.5000058%" android:codes="97" android:popupCharacters="_" android:keyLabel="a" altLabel="_" />	<Key android:codes="115" android:keyLabel="s" altLabel="\#" android:popupCharacters="\#" />
 		<Key android:codes="100" android:keyLabel="d" altLabel="$" android:popupCharacters="$" />
 		<Key android:codes="102" android:keyLabel="f" altLabel="&amp;" android:popupCharacters="&amp;" />
 		<Key android:codes="103" android:keyLabel="g" altLabel="*" android:popupCharacters="*" />
@@ -46,6 +46,7 @@
 		<Key android:codes="107" android:keyLabel="k" altLabel="(" android:popupCharacters="(" />
 		<Key android:codes="108" android:keyLabel="l" altLabel=")" android:popupCharacters=")" 
 			android:keyEdgeFlags="right" />
+		<Key android:horizontalGap="0.5000032%" android:keyWidth="5.9999996%p" android:codes="92" android:popupCharacters="|" android:keyEdgeFlags="right" android:keyLabel="\\" altLabel="|" />
 	</Row>
 	<Row android:keyWidth="10.2%p">
 		<Key android:codes="-1" android:keyIcon="@drawable/sym_keyboard_shift" 
