@@ -57,24 +57,24 @@ public class SeekBarPref extends DialogPreference implements SeekBar.OnSeekBarCh
         final String key = getKey();
         if (key.equals("vibrator_duration_ms")) {
         	bar.setMax(75);
-        	bar.setProgress(getPersistedInt(20));
+        	bar.setProgress((int)getPersistedFloat(20));
         }
         else if (key.equals("opacity")) {
-        	bar.setMax(50);
+        	bar.setMax(25);
             mDisplayFactor = 2;
-        	bar.setProgress(getPersistedInt(50));
+        	bar.setProgress((int)getPersistedFloat(50)/2);
         } else if (key.equals("longpress_duration")) {
         	bar.setMax(100);
-        	bar.setProgress(getPersistedInt(50));
+        	bar.setProgress((int)getPersistedFloat(50));
         } else if (key.equals("swipe_factor")) {
         	bar.setMax(100);
-        	bar.setProgress(getPersistedInt(70));
+        	bar.setProgress((int)getPersistedFloat(70));
         } else if (key.equals("multitap_interval")) {
         	bar.setMax(150);
-        	bar.setProgress(getPersistedInt(80));
+        	bar.setProgress((int)getPersistedFloat(80));
         } else if (key.equals("bottom_padding")) {
         	bar.setMax(40);
-    		bar.setProgress(getPersistedInt(0));
+    		bar.setProgress((int)getPersistedFloat(0));
         } else {
         	bar.setMax((int)((mMax - mMin)/mDisplayFactor));
         	bar.setProgress((int)((getPersistedFloat(mDefault) - mMin )/ mDisplayFactor));

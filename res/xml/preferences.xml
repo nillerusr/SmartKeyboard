@@ -436,7 +436,7 @@
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="@string/transparency" android:summary="@string/transparency_summary"
 			android:dialogTitle="@string/opacity" android:key="opacity"
-			android:persistent="true" android:defaultValue="50" />
+			android:persistent="true" android:defaultValue="50.0" />
 		<CheckBoxPreference android:title="@string/cursor_volume"
 			android:key="cursor_volume" android:summary="@string/cursor_volume_summary"
 			android:persistent="true" android:defaultValue="false" />
@@ -461,7 +461,7 @@
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="@string/longpress_duration" android:summary="@string/longpress_duration_summary"
 			android:dialogTitle="@string/longpress_duration" android:key="longpress_duration"
-			android:persistent="true" android:defaultValue="40" />
+			android:persistent="true" android:defaultValue="40.0" />
 		<CheckBoxPreference android:key="custom_smileys" android:title="@string/custom_smileys"
 						android:summary="@string/custom_smileys_summary"
 						android:persistent="true" android:defaultValue="false" />
@@ -494,7 +494,7 @@
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="@string/multitap_interval" android:summary="@string/multitap_interval_summary"
 			android:dialogTitle="@string/multitap_interval" android:key="multitap_interval"
-			android:persistent="true" android:defaultValue="80" />
+			android:persistent="true" android:defaultValue="80.0" />
 		<PreferenceScreen android:title="@string/calibration" 
 			android:summary="@string/calibration_summary" >
 			<intent android:action="android.intent.action.MAIN"
@@ -510,7 +510,7 @@
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="@string/bottom_padding" android:summary="@string/bottom_padding_summary"
 			android:dialogTitle="@string/bottom_padding" android:key="bottom_padding"
-			android:persistent="true" android:defaultValue="0" />
+			android:persistent="true" android:defaultValue="0.0" />
 	</PreferenceScreen>
 	<PreferenceScreen android:title="Size settings">
 
@@ -522,7 +522,7 @@
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="@string/bottom_padding" android:summary="@string/bottom_padding_summary"
 			android:dialogTitle="@string/bottom_padding" android:key="bottom_padding"
-			android:persistent="true" android:defaultValue="0" />
+			android:persistent="true" android:defaultValue="0.0" />
 
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="Font scale" android:summary="Scale key fonts"
@@ -646,7 +646,7 @@
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="@string/swipe_sensitivity" android:summary="@string/swipe_sensitivity_summary"
 			android:dialogTitle="@string/swipe_sensitivity" android:key="swipe_factor"
-			android:persistent="true" android:defaultValue="70" />
+			android:persistent="true" android:defaultValue="70.0" />
 	</PreferenceScreen>
 
 	<PreferenceScreen android:title="@string/voice_input">
@@ -676,7 +676,7 @@
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="@string/volume" android:summary="@string/volume_summary"
 			android:dialogTitle="@string/volume" android:key="volume"
-			android:persistent="true" android:defaultValue="100"
+			android:persistent="true" android:defaultValue="100.0"
 			android:dependency="sound_on" />
 		<ListPreference android:key="sound_style" android:title="@string/select_sound"
 		 	android:entries="@array/sound_styles"
@@ -688,7 +688,7 @@
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:key="vibrator_duration_ms" android:title="@string/vibrate_duration"
 			android:dialogTitle="@string/vibrate_duration" android:dependency="vibrate"
-			android:persistent="true" android:defaultValue="20" />
+			android:persistent="true" android:defaultValue="20.0" />
 		<CheckBoxPreference android:title="@string/space_alert"
 			android:summary="@string/space_alert_summary" android:key="space_alert"
 			android:defaultValue="false" android:persistent="true" android:dependency="vibrate" />

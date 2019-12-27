@@ -350,8 +350,8 @@ public class SmartKeyboard extends InputMethodService implements
 		final String curLanguage = sp.getString("curLang", "EN");
 		final String skin = sp.getString(KeyboardPreferences.PREF_SKIN, "Android");
 		mSkinLoader.loadSkin(skin);
-		mOpacity = sp.getInt(KeyboardPreferences.PREF_TRANSPARENCY, 50);
-		final int volume = sp.getInt(KeyboardPreferences.PREF_VOLUME, 100);
+		mOpacity = (int)sp.getFloat(KeyboardPreferences.PREF_TRANSPARENCY, 50);
+		final float volume = sp.getFloat(KeyboardPreferences.PREF_VOLUME, 100);
 		mVolume = (float) Math.exp((volume - 100) / 20);
 		mMicButton = sp.getBoolean(KeyboardPreferences.PREF_MIC_BUTTON, false);
 		voiceInputController.mRestartVoice = sp.getBoolean(KeyboardPreferences.PREF_RESTART_VOICE, false);
@@ -372,9 +372,9 @@ public class SmartKeyboard extends InputMethodService implements
 		mSpacePreview = sp.getBoolean(KeyboardPreferences.PREF_SPACE_PREVIEW, false);
 		mCandidateColor = sp.getInt(KeyboardPreferences.PREF_CANDIDATE_COLOR, 0);
 		mSuggestPunctuation = sp.getBoolean(KeyboardPreferences.PREF_SUGGEST_PUNCTUATION, true);
-		mLongpressDuration = sp.getInt(KeyboardPreferences.PREF_LONGPRESS_DURATION, 50);
-		mMultitapInterval = sp.getInt(KeyboardPreferences.PREF_MULTITAP_INTERVAL, 80) * 10;
-		mSwipeFactor = 100 - sp.getInt(KeyboardPreferences.PREF_SWIPE_FACTOR, 70);
+		mLongpressDuration = (int)sp.getFloat(KeyboardPreferences.PREF_LONGPRESS_DURATION, 50);
+		mMultitapInterval = (int)sp.getFloat(KeyboardPreferences.PREF_MULTITAP_INTERVAL, 80) * 10;
+		mSwipeFactor = 100 - (int)sp.getFloat(KeyboardPreferences.PREF_SWIPE_FACTOR, 70);
 		mEnterSendsSMS = sp.getBoolean(KeyboardPreferences.PREF_ENTER_SENDS_SMS, false);
 		mNoAltPreview = sp.getBoolean(KeyboardPreferences.PREF_NO_ALT_PREVIEW, false);
 		final String latinLayout = sp.getString(KeyboardPreferences.PREF_LATIN_LAYOUT, "");
@@ -396,7 +396,7 @@ public class SmartKeyboard extends InputMethodService implements
 		boolean t9LengthPriority = sp.getBoolean(KeyboardPreferences.PREF_T9_LENGTH_PRIORITY, true);
 		mSuggestNumbers = sp.getBoolean(KeyboardPreferences.PREF_SUGGEST_NUMBERS, false);
 		mAskEnglishDic = sp.getBoolean(KeyboardPreferences.PREF_ASK_ENGLISH_DIC, true);
-		mBottomPadding = sp.getInt(KeyboardPreferences.PREF_BOTTOM_PADDING, 0);
+		mBottomPadding = (int)sp.getFloat(KeyboardPreferences.PREF_BOTTOM_PADDING, 0);
 		mIgnoreHardKbd = sp.getBoolean(KeyboardPreferences.PREF_IGNORE_HARD_KBD, false);
 		mHidePortrait = sp.getBoolean(KeyboardPreferences.PREF_HIDE_IN_PORTRAIT, false);
 		mCursorVolume = sp.getBoolean(KeyboardPreferences.PREF_CURSOR_VOLUME, false);
@@ -714,6 +714,9 @@ public class SmartKeyboard extends InputMethodService implements
 			params.x = mFloatingX;
 			params.y = mFloatingY;
 			params.width = mKeyboardWidth;     
+			//params.alpha = mOpacity;
+			if(mOpacity != 50)
+				params.format = PixelFormat.TRANSPARENT;
 			params.height = mDisplayHeight;
 			mWM.addView(mLastKeyboard, params);
 		}
