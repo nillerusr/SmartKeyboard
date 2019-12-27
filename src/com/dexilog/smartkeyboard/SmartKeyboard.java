@@ -462,6 +462,7 @@ public class SmartKeyboard extends InputMethodService implements
 		GlobalResources.mWidthScale = widthScale;
 		GlobalResources.mFontScale = sp.getFloat("fontScale",1);
 		GlobalResources.mIconScale = sp.getFloat("iconScale",1);
+		GlobalResources.mBottomScale = sp.getFloat("bottomScale",1);
 		mArrowsMain = arrowsMain;
 
 		mKeyboardSwitcher.makeKeyboards(clearKbd);

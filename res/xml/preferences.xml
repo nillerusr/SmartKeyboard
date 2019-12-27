@@ -455,13 +455,13 @@
 			android:persistent="true" android:defaultValue="true" />
 		<CheckBoxPreference android:title="@string/alt_symbols"
 			android:key="alt_symbols" android:summary="@string/alt_symbols_summary"
-			android:persistent="true" android:defaultValue="false" />
+			android:persistent="true" android:defaultValue="true" />
 		<CheckBoxPreference android:title="@string/more_symbols" android:key="more_symbols"
 			android:summary="@string/more_symbols_summary" android:persistent="true" android:defaultValue="true" />
 		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
 			android:title="@string/longpress_duration" android:summary="@string/longpress_duration_summary"
 			android:dialogTitle="@string/longpress_duration" android:key="longpress_duration"
-			android:persistent="true" android:defaultValue="40.0" />
+			android:persistent="true" android:defaultValue="20.0" />
 		<CheckBoxPreference android:key="custom_smileys" android:title="@string/custom_smileys"
 						android:summary="@string/custom_smileys_summary"
 						android:persistent="true" android:defaultValue="false" />
@@ -541,6 +541,12 @@
 			android:dialogTitle="Keyboard width" android:key="keyboardWidth"
 			android:persistent="true" android:defaultValue="1.0"
 			minValue="0.0" maxValue="1.0" displayFactor="0.001"/>
+
+		<com.dexilog.smartkeyboard.ui.preferences.SeekBarPref
+			android:title="Bottom line scale" android:summary="123, lang, space"
+			android:dialogTitle="bottom line" android:key="bottomScale"
+			android:persistent="true" android:defaultValue="1.0"
+			minValue="0.5" maxValue="2.0" displayFactor="0.05"/>
 	</PreferenceScreen>
 
 	<PreferenceScreen android:title="@string/text_prediction">

@@ -22,6 +22,5 @@ public class GlobalResources {
 	public static int mKeyHeightLandscape = 50;
 	public static boolean mHideComma = false;
 	public static boolean mHidePeriod = false;
-	public static float mWidthScale = 1, mFontScale=1, mIconScale=1;
-	
+	public static float mWidthScale = 1, mFontScale=1, mIconScale=1, mBottomScale = 1;
 }

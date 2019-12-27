@@ -17,22 +17,22 @@
  */
 -->
 <Rows xmlns:android="http://schemas.android.com/apk/res/android">
-	<Row android:keyWidth="10%p">
+	<Row android:keyWidth="10%p" android:rowEdgeFlags="top|bottom">
 		<Key android:codes="-104" android:keyIcon="@drawable/up_arrow"
 			android:iconPreview="@drawable/up_arrow" android:keyEdgeFlags="right"
 			iconID="@+id/up_arrow" android:isRepeatable="true" android:horizontalGap="0.5%p" />
 	</Row>
-	<Row android:keyWidth="10%p">
+	<Row android:keyWidth="10%p" android:rowEdgeFlags="top|bottom">
 		<Key android:codes="-102" android:keyIcon="@drawable/left_arrow"
 			android:iconPreview="@drawable/left_arrow" android:keyEdgeFlags="right"
 			android:isRepeatable="true" iconID="@+id/left_arrow" android:horizontalGap="0.5%p" />
 	</Row>
-	<Row android:keyWidth="10%p">
+	<Row android:keyWidth="10%p" android:rowEdgeFlags="top|bottom">
 		<Key android:codes="-103" android:keyIcon="@drawable/right_arrow"
 			android:isRepeatable="true" android:iconPreview="@drawable/right_arrow"
 		 	iconID="@+id/right_arrow" android:keyEdgeFlags="right" android:horizontalGap="0.5%p" />
 	</Row>
-	<Row android:keyWidth="10%p">
+	<Row android:keyWidth="10%p" android:rowEdgeFlags="top|bottom">
 		<Key android:codes="-105" android:keyIcon="@drawable/down_arrow"
 			android:iconPreview="@drawable/down_arrow" android:isRepeatable="true"
 			android:keyEdgeFlags="right" iconID="@+id/down_arrow" android:horizontalGap="0.5%p" />

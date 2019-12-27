@@ -17,7 +17,7 @@
  */
 -->
 <Rows xmlns:android="http://schemas.android.com/apk/res/android">
-	<Row android:keyWidth="25%p" android:keyHeight="@dimen/arrow_key_height" android:rowEdgeFlags="bottom">
+	<Row android:keyWidth="25%p" android:keyHeight="@dimen/arrow_key_height">
 		<Key android:codes="-104" android:keyIcon="@drawable/up_arrow"
 			android:iconPreview="@drawable/up_arrow" 
 			iconID="@+id/up_arrow" android:isRepeatable="true" />

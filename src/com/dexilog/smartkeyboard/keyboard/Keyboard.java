@@ -304,6 +304,15 @@ public class Keyboard {
 			a = res.obtainAttributes(Xml.asAttributeSet(parser),
 					R.styleable.Keyboard_Row);
 			rowEdgeFlags = a.getInt(R.styleable.Keyboard_Row_android_rowEdgeFlags, 0);
+			if( rowEdgeFlags != 0)
+				Log.d(TAG,"flags"+rowEdgeFlags);
+			if( rowEdgeFlags == 8 ) // bottom line
+			{
+				//
+				defaultHeight *= GlobalResources.mBottomScale;
+				}
+			if( rowEdgeFlags == 12 ) // hack for left arrows
+				defaultHeight *= 1+(GlobalResources.mBottomScale-1)/4;
 			// XXX
 			rowEdgeFlags = 0;
 			mode = a.getResourceId(R.styleable.Keyboard_Row_android_keyboardMode,
