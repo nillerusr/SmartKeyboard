@@ -24,7 +24,7 @@
         android:background="@drawable/accent_bg"
         >
         
-    <com.dexilog.smartkeyboard.ui.MainKeyboardView
+    <com.dexilog.smartkeyboard.ui.KeyboardView
             android:id="@+id/keyboardView"
             android:background="@android:color/transparent"
             android:layout_alignParentBottom="true"
