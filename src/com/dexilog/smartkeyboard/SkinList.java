@@ -24,7 +24,7 @@ import com.dexilog.openskin.OpenSkin;
 import com.dexilog.smartkeyboard.keyboard.CustomKeys;
 import com.dexilog.smartkeyboard.keyboard.Keyboard;
 import com.dexilog.smartkeyboard.settings.PermissionManager;
-import com.dexilog.smartkeyboard.ui.MainKeyboardView;
+import com.dexilog.smartkeyboard.ui.KeyboardView;
 import com.dexilog.smartkeyboard.ui.SkinLoader;
 import com.dexilog.smartkeyboard.ui.OnKeyboardActionListener;
 
@@ -65,7 +65,7 @@ public class SkinList extends Activity implements OnKeyboardActionListener, OnIt
 	SkinLoader mSkinLoader;
 	CustomKeys mCustomKeys;
 	Keyboard mKeyboard;
-	MainKeyboardView mInputView;
+	KeyboardView mInputView;
 	boolean mShiftState = false;
 	CharSequence mGetSkins;
 	int mCurSkin;
@@ -127,7 +127,7 @@ public class SkinList extends Activity implements OnKeyboardActionListener, OnIt
 	private void createKeyboardView() {
 		Resources res = getResources();
 		mCustomKeys = new CustomKeys(this, mPrefs);
-		mInputView = (MainKeyboardView)findViewById(R.id.keyboard);
+		mInputView = (KeyboardView)findViewById(R.id.keyboard);
 		mKeyboard = new Keyboard(this, R.xml.qwerty,  R.id.mode_normal, true, false, false, null);
 		mInputView.setKeyboard(mKeyboard);
 		mInputView.setPreviewEnabled(false);

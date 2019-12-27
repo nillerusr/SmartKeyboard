@@ -70,7 +70,7 @@ import com.dexilog.smartkeyboard.input.InputConnectionProvider;
 import com.dexilog.smartkeyboard.input.InputController;
 import com.dexilog.smartkeyboard.keyboard.KeyboardFactory;
 import com.dexilog.smartkeyboard.ui.CalibrationInfo;
-import com.dexilog.smartkeyboard.ui.MainKeyboardView;
+import com.dexilog.smartkeyboard.ui.KeyboardView;
 import com.dexilog.smartkeyboard.ui.SkinLoader;
 import com.dexilog.smartkeyboard.ui.SkinLoader.SkinInfo;
 
@@ -507,7 +507,7 @@ public class SmartKeyboard extends InputMethodService implements
 						1);
 			}
 		}
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView != null) {
 			setInputOptions(false);
 		}
@@ -646,7 +646,7 @@ public class SmartKeyboard extends InputMethodService implements
 			Log.d("KBD", "onConfigurationChanged");
 
 		// Reset the pressed state of the current key
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView != null) {
 			mKeyboardView.resetKeyState();
 		}
@@ -677,7 +677,7 @@ public class SmartKeyboard extends InputMethodService implements
 	}
 
 
-	private MainKeyboardView mLastKeyboard;
+	private KeyboardView mLastKeyboard;
 	private int mDisplayWidth, mDisplayHeight;
 	private int mKeyboardWidth;
 	private void setFloating(boolean floating)
@@ -688,7 +688,7 @@ public class SmartKeyboard extends InputMethodService implements
 
 		if( floating )
 		{
-			mLastKeyboard.setWindowMover(new MainKeyboardView.WindowMover()
+			mLastKeyboard.setWindowMover(new KeyboardView.WindowMover()
 			{
 				@Override
 				public void move(int dx, int dy)
@@ -745,9 +745,9 @@ public class SmartKeyboard extends InputMethodService implements
 		else
 			setFloating(!mFloating);
 
-		((com.dexilog.smartkeyboard.keyboard.Keyboard) mKeyboardSwitcher.getMainKeyboardView().getKeyboard())
+		((com.dexilog.smartkeyboard.keyboard.Keyboard) mKeyboardSwitcher.getKeyboardView().getKeyboard())
 			.setFloatingSticky(mFloating,mFloatingSticky);
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		mKeyboardView.setShifted(mCapsLock || mKeyboardView.isShifted(),
 								 true);
 				
@@ -785,7 +785,7 @@ public class SmartKeyboard extends InputMethodService implements
 
 		mInputView = getLayoutInflater().inflate(R.layout.input, null);
 
-		MainKeyboardView mainKeyboardView = new MainKeyboardView(getLayoutInflater().getContext(),null);//(MainKeyboardView) mInputView.findViewById(R.id.keyboard);
+		KeyboardView mainKeyboardView = new KeyboardView(getLayoutInflater().getContext(),null);//(KeyboardView) mInputView.findViewById(R.id.keyboard);
 
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 		mDisplayWidth = dm.widthPixels;
@@ -833,7 +833,7 @@ public class SmartKeyboard extends InputMethodService implements
 	}
 
 	private void setInputOptions(boolean restart) {
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		mKeyboardView.setPreviewEnabled(mShowPreview);
 		SkinInfo skin = mSkinLoader.getCurrentSkin();
 		if (mCandidateViewContainer != null) {
@@ -995,7 +995,7 @@ public class SmartKeyboard extends InputMethodService implements
 			Log.d(TAG, "onStartInputView inputType=" + Integer.toString(attribute.inputType));
 
 		// Is keyboard visible?
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView != null) {
 			final boolean isVisible = isKeyboardVisible();
 			mKeyboardView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
@@ -1207,7 +1207,7 @@ public class SmartKeyboard extends InputMethodService implements
 		super.onFinishInput();
 
 		voiceInputController.cancelVoiceInput(this);
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView != null) {
 			mKeyboardView.closing();
 		}
@@ -1295,7 +1295,7 @@ public class SmartKeyboard extends InputMethodService implements
 										  int candidatesStart, int candidatesEnd) {
 		if (DEBUG) Log.d(TAG, "Check recorrect");
 		// Don't look for corrections if the keyboard is not visible
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView != null && mKeyboardView.isShown()) {
             // Check if we should go in or out of correction mode.
             if (isPredictionOn()
@@ -1430,7 +1430,7 @@ public class SmartKeyboard extends InputMethodService implements
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		// Handle volume keys
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mCursorVolume && mKeyboardView != null && mKeyboardView.isShown()) {
 			switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
@@ -1545,7 +1545,7 @@ public class SmartKeyboard extends InputMethodService implements
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 
 		// Handle volume keys
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mCursorVolume && mKeyboardView != null && mKeyboardView.isShown()) {
 			switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
@@ -1651,7 +1651,7 @@ public class SmartKeyboard extends InputMethodService implements
 
 	public void updateShiftKeyState(EditorInfo attr) {
 		InputConnection ic = getCurrentInputConnection();
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (attr != null && mKeyboardView != null
 				&& mKeyboardSwitcher.isAlphabetMode() && ic != null) {
 			mKeyboardView.setShifted(
@@ -1746,7 +1746,7 @@ public class SmartKeyboard extends InputMethodService implements
 	}
 
 	public boolean isT9PredictionOn() {
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		return isModeT9() && mKeyboardView != null
 				&& mKeyboardView.isT9PredictionOn();
 	}
@@ -1824,7 +1824,7 @@ public class SmartKeyboard extends InputMethodService implements
 		if (mKeyboardSwitcher.isAlphabetMode()) {
 			// Alphabet keyboard
 			checkToggleCapsLock();
-			final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+			final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 			mKeyboardView.setShifted(mCapsLock || !mKeyboardView.isShifted(),
 					forceDraw);
 		} else {
@@ -1886,7 +1886,7 @@ public class SmartKeyboard extends InputMethodService implements
             mCurTranslator = mKeyboardSwitcher.getConverter();
         }
 
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		boolean isShifted = (mKeyboardView != null && mKeyboardView.isShifted());
 		// With hard keyboard the input view may not exist
 		if (hardKbd && (mKeyboardView == null || !mKeyboardView.isShown())) {
@@ -1963,7 +1963,7 @@ public class SmartKeyboard extends InputMethodService implements
 			// requires the last vowel to be removed.
 
 			boolean autoCorrect = mAutoCorrectOn;
-			final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+			final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 			if (isModeT9() && mKeyboardView != null) {
 				// Autocorrect if and only if T9 prediction is off
 				// Always use autocorrect in Japanese T9 (to make enter key
@@ -2059,13 +2059,13 @@ public class SmartKeyboard extends InputMethodService implements
 
 		suggestController.commitTyped(getCurrentInputConnection());
 		requestHideSelf(0);
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		mKeyboardView.closing();
 		TextEntryState.endSession();
 	}
 
 	private void checkToggleCapsLock() {
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView.getKeyboard().isShifted()) {
 			toggleCapsLock();
 		}
@@ -2074,7 +2074,7 @@ public class SmartKeyboard extends InputMethodService implements
 	private void toggleCapsLock() {
 		mCapsLock = !mCapsLock;
 		if (mKeyboardSwitcher.isAlphabetMode()) {
-			final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+			final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 			((com.dexilog.smartkeyboard.keyboard.Keyboard) mKeyboardView.getKeyboard())
 					.setShiftLocked(mCapsLock);
 		}
@@ -2199,7 +2199,7 @@ public class SmartKeyboard extends InputMethodService implements
 
 	private void showCorrections(WordAlternatives alternatives) {
 		List<CharSequence> stringList = alternatives.getAlternatives();
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView != null && mKeyboardView.getKeyboard() != null) {
 			mKeyboardView.getKeyboard().setPreferredLetters(null);
 			showSuggestions(stringList, alternatives.getOriginalWord(), false,
@@ -2409,7 +2409,7 @@ public class SmartKeyboard extends InputMethodService implements
 	}
 
 	public void swipeAction(int action) {
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		switch (action) {
 			case SwipeGestures.SWIPE_ACTION_SHIFT:
 				handleShift(true);
@@ -2575,7 +2575,7 @@ public class SmartKeyboard extends InputMethodService implements
 		// if mAudioManager is null, we don't have the ringer state yet
 		// mAudioManager will be set by updateRingerMode
 		if (mAudioManager == null) {
-			final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+			final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 			if (mKeyboardView != null) {
 				updateRingerMode();
 			}
@@ -2638,7 +2638,7 @@ public class SmartKeyboard extends InputMethodService implements
 	}
 
 	private void checkTrialPopup() {
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView == null || !mKeyboardView.isShown()) {
 			return;
 		}
@@ -2692,7 +2692,7 @@ public class SmartKeyboard extends InputMethodService implements
 	}
 
 	private void displayEnglishDicDialog() {
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView == null || !mKeyboardView.isShown()) {
 			return;
 		}
@@ -2806,7 +2806,7 @@ public class SmartKeyboard extends InputMethodService implements
 	public void changeKeyboardMode() {
 		mKeyboardSwitcher.toggleSymbols();
 		if (mCapsLock && mKeyboardSwitcher.isAlphabetMode()) {
-			final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+			final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 			((com.dexilog.smartkeyboard.keyboard.Keyboard) mKeyboardView.getKeyboard())
 					.setShiftLocked(mCapsLock);
 		}
@@ -2829,7 +2829,7 @@ public class SmartKeyboard extends InputMethodService implements
 	}
 
 	private void launchSettingsActivity() {
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		mKeyboardView.closing();
 		Intent intent = new Intent(SmartKeyboard.this,
                 Settings.class);
@@ -2873,7 +2873,7 @@ public class SmartKeyboard extends InputMethodService implements
 		mInputController.setPredicting(false);
 		suggestController.mCandidateSelected = false;
         suggestController.mCommittedLength = suggestion.length();
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		if (mKeyboardView != null) {
             final Keyboard kbd = mKeyboardView.getKeyboard();
             if (kbd != null) {
@@ -2883,7 +2883,7 @@ public class SmartKeyboard extends InputMethodService implements
     }
 
 	boolean isKeyboardShifted() {
-		final KeyboardView mKeyboardView = mKeyboardSwitcher.getMainKeyboardView();
+		final KeyboardView mKeyboardView = mKeyboardSwitcher.getKeyboardView();
 		return mKeyboardSwitcher.isAlphabetMode() && mKeyboardView != null && mKeyboardView
                 .isShifted();
     }

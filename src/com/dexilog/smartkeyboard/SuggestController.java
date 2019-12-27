@@ -97,8 +97,8 @@ public class SuggestController {
         mWaitingForSuggestions = false;
 
         Keyboard kbd = null;
-        if (smartKeyboard.mKeyboardSwitcher.getMainKeyboardView() != null)
-            kbd = smartKeyboard.mKeyboardSwitcher.getMainKeyboardView().getKeyboard();
+        if (smartKeyboard.mKeyboardSwitcher.getKeyboardView() != null)
+            kbd = smartKeyboard.mKeyboardSwitcher.getKeyboardView().getKeyboard();
         if (kbd != null) {
             kbd.setPreferredLetters(null);
         }
@@ -223,8 +223,8 @@ public class SuggestController {
 
     public List<CharSequence> getTypedSuggestions(WordComposer word) {
         final boolean modeT9 = smartKeyboard.isModeT9();
-        final boolean isT9Prediction = modeT9 && smartKeyboard.mKeyboardSwitcher.getMainKeyboardView() != null
-                && smartKeyboard.mKeyboardSwitcher.getMainKeyboardView().isT9PredictionOn();
+        final boolean isT9Prediction = modeT9 && smartKeyboard.mKeyboardSwitcher.getKeyboardView() != null
+                && smartKeyboard.mKeyboardSwitcher.getKeyboardView().isT9PredictionOn();
         final List<CharSequence> stringList = suggest.getSuggestions(word,
                 modeT9, isT9Prediction, smartKeyboard.getConverter());
         return stringList;
@@ -251,8 +251,8 @@ public class SuggestController {
     public void handleNextSuggestion(boolean withNextSpace, SmartKeyboard smartKeyboard) {
         mCandidateView.nextSuggestion(withNextSpace);
         if (withNextSpace || !smartKeyboard.isModeT9()
-                || (smartKeyboard.mKeyboardSwitcher.getMainKeyboardView() != null &&
-                smartKeyboard.mKeyboardSwitcher.getMainKeyboardView().isT9PredictionOn())) {
+                || (smartKeyboard.mKeyboardSwitcher.getKeyboardView() != null &&
+                smartKeyboard.mKeyboardSwitcher.getKeyboardView().isT9PredictionOn())) {
             // Update composing word
             mBestWord = mCandidateView.getCurrentSuggestion();
             smartKeyboard.getCurrentInputConnection().setComposingText(mBestWord, 1);

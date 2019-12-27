@@ -171,7 +171,7 @@ public class KeyboardSwitcher {
 		mInputView = inputView;
 	}
 
-	public KeyboardView getMainKeyboardView() {
+	public KeyboardView getKeyboardView() {
 		return mInputView;
 	}
 

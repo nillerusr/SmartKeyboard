@@ -173,7 +173,7 @@ public class VoiceInputController {
 
         Window window = mVoiceWarningDialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
-        lp.token = smartKeyboard.mKeyboardSwitcher.getMainKeyboardView().getWindowToken();
+        lp.token = smartKeyboard.mKeyboardSwitcher.getKeyboardView().getWindowToken();
         lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
         window.setAttributes(lp);
         window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
@@ -288,7 +288,7 @@ public class VoiceInputController {
         Window window = alert.getWindow();
         if (window != null) {
             WindowManager.LayoutParams lp = window.getAttributes();
-            lp.token = smartKeyboard.mKeyboardSwitcher.getMainKeyboardView().getWindowToken();
+            lp.token = smartKeyboard.mKeyboardSwitcher.getKeyboardView().getWindowToken();
             lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
             window.setAttributes(lp);
             window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
@@ -355,7 +355,7 @@ public class VoiceInputController {
         AlertDialog alert = builder.create();
         Window window = alert.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
-        lp.token = smartKeyboard.mKeyboardSwitcher.getMainKeyboardView().getWindowToken();
+        lp.token = smartKeyboard.mKeyboardSwitcher.getKeyboardView().getWindowToken();
         lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
         window.setAttributes(lp);
         window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);

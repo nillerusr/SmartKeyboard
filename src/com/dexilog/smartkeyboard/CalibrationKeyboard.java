@@ -19,9 +19,9 @@ package com.dexilog.smartkeyboard;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.dexilog.smartkeyboard.ui.MainKeyboardView;
+import com.dexilog.smartkeyboard.ui.KeyboardView;
 
-public class CalibrationKeyboard extends MainKeyboardView {
+public class CalibrationKeyboard extends KeyboardView {
 
 	public int mLastX;
 	public int mLastY;
