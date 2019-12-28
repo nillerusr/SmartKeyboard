@@ -24,8 +24,8 @@
 	<supports-screens android:anyDensity="true" />
 
     <uses-sdk 
-        android:minSdkVersion="8" 
-        android:targetSdkVersion="21" />
+        android:minSdkVersion="3" 
+        android:targetSdkVersion="9" />
 	
 
 	<uses-permission android:name="android.permission.READ_USER_DICTIONARY"></uses-permission>
@@ -37,8 +37,7 @@
 	
 	<uses-feature android:name="android.hardware.microphone" android:required="false" />
 
-	<application android:icon="@drawable/icon" android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+	<application android:icon="@drawable/icon" android:label="@string/app_name">
 		<service android:name="com.dexilog.smartkeyboard.SmartKeyboard" android:permission="android.permission.BIND_INPUT_METHOD">
 			<intent-filter>
 				<action android:name="android.view.InputMethod" />
@@ -103,11 +102,11 @@
 			</intent-filter>
 		</activity>
 		<provider android:name="com.dexilog.smartkeyboard.AutoTextProvider"
-			android:authorities="${applicationId}.autotextprovider" />
+			android:authorities="com.dexilog.smartkeyboard.autotextprovider" />
 		<provider android:name="com.dexilog.smartkeyboard.UserDictionaryProvider"
-			android:authorities="${applicationId}.userdicprovider" />
+			android:authorities="com.dexilog.smartkeyboard.userdicprovider" />
 		<provider android:name="com.dexilog.smartkeyboard.MyBackupPro"
-			android:authorities="${applicationId}.MyBackupPro" />
+			android:authorities="com.dexilog.smartkeyboard.MyBackupPro" />
 
 		<!-- for voice -->
 		<service android:name="com.google.android.voiceime.ServiceHelper"/>

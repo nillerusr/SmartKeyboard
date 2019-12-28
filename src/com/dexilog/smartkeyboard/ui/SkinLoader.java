@@ -34,6 +34,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 
 import com.dexilog.smartkeyboard.R;
+import android.graphics.*;
+import android.graphics.drawable.*;
 
 public class SkinLoader {
 	
@@ -186,27 +188,27 @@ public class SkinLoader {
 			} else if (attr == R.styleable.KeyboardStyle_colorBackgroundBottom) {
 				backgroundColor[1] = a.getColor(attr, 0xFF464646);
 			} else if (attr == R.styleable.KeyboardStyle_deleteKey) {
-				info.deleteKey = a.getDrawable(attr);
+				info.deleteKey = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_returnKey) {
-				info.returnKey = a.getDrawable(attr);
+				info.returnKey = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_searchKey) {
-				info.searchKey = a.getDrawable(attr);
+				info.searchKey = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_shiftKey) {
-				info.shiftKey = a.getDrawable(attr);
+				info.shiftKey = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_shiftLockedKey) {
-				info.shiftLockedKey = a.getDrawable(attr);
+				info.shiftLockedKey = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_spaceKey) {
-				info.spaceKey = a.getDrawable(attr);
+				info.spaceKey = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_micKey) {
-				info.micKey = a.getDrawable(attr);
+				info.micKey = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_leftArrow) {
-				info.leftArrow = a.getDrawable(attr);
+				info.leftArrow = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_rightArrow) {
-				info.rightArrow = a.getDrawable(attr);
+				info.rightArrow = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_upArrow) {
-				info.upArrow = a.getDrawable(attr);
+				info.upArrow = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_downArrow) {
-				info.downArrow = a.getDrawable(attr);
+				info.downArrow = getRes(a.getResourceId(attr,0));
 			} else if (attr == R.styleable.KeyboardStyle_boldLabel) {
 				info.boldLabel = a.getBoolean(attr, false);
 			} else if (attr == R.styleable.KeyboardStyle_smallKeys) {
@@ -385,15 +387,23 @@ public class SkinLoader {
 			return null;
 		}
 	}
+	private Drawable getRes(int resId)
+	{
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inDensity = mContext.getResources().getDisplayMetrics().densityDpi;
+		return new BitmapDrawable(BitmapFactory.decodeResource(mContext.getResources(),resId,options));
+	}
 	
 	private Drawable getDrawableOrDef(Resources res, String name, String packageName, 
 			int resId) {
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inDensity = res.getDisplayMetrics().densityDpi;
 		try {
 			int id = res.getIdentifier(name, "drawable", packageName);
-			return res.getDrawable(id);
+			return new BitmapDrawable(BitmapFactory.decodeResource(res,id,options));
 		} catch (Resources.NotFoundException e) {
 			if (DEBUG) Log.d(TAG, "drawable not found: " + name);
-			return mContext.getResources().getDrawable(resId);
+			return new BitmapDrawable(BitmapFactory.decodeResource(mContext.getResources(),resId,options));
 		}
 	}
 	
